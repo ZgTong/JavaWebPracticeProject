@@ -19,9 +19,12 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
         User loginUser = userService.login(new User(null,username,password,null));
         if (loginUser==null){
-            req.getRequestDispatcher("/pages/user/login.html").forward(req,res);
+            // 把错误信息，和回显的表单项信息，保存到Request域中
+            req.setAttribute("msg","用户或密码错误！");
+            req.setAttribute("username", username);
+            req.getRequestDispatcher("/pages/user/login.jsp").forward(req,res);
         }else{
-            req.getRequestDispatcher("/pages/user/login_success.html").forward(req,res);
+            req.getRequestDispatcher("/pages/user/login_success.jsp").forward(req,res);
         }
     }
 }
